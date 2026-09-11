@@ -24,3 +24,22 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* FileUploader component takes custom css styling */
+.file-uploader {
+  display: flex;
+  align-items: center;
+  min-width: 400px;
+  height: 48px;
+  padding: 8px 16px;
+  color: #0a0a0a;
+  border: 1px dashed #0a0a0a !important;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.results-table-scroll {
+  max-height: 28rem;
+  overflow-x: auto;
+  overflow-y: auto;
+}

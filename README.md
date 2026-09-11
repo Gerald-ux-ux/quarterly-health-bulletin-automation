@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Quarterly Health Bulletin
+
+A browser-based prototype that reads DHSI2-style CSV reports and produces a Quarterly Health Bulletin. Users upload the source files, generate calculations, review three report sections, and download each section as a separate CSV file.
+
+## What It Does
+
+The application produces three reports:
+
+1. **Top Facilities**: ranks facilities by total deliveries across all reporting months.
+2. **Maternal & Newborn Indicators**: reports stillbirth rate, neonatal mortality rate, and cause-specific proportions for asphyxia, prematurity, and sepsis.
+3. **Performance Score**: currently implements Clinical Effectiveness by combining clinical survival outcomes with death-audit practice from governance data.
+
+Critical Readiness and Operational Quality are displayed as `Coming soon`. Clinical Effectiveness was deliberately implemented first because it combines patient outcomes and institutional accountability into one high-impact score.
+
+## Required Input Files
+
+The prototype currently validates files by exact filename:
+
+- `clinical_neonatal.csv`
+- `facilities.csv`
+- `governance.csv`
+
+The application also accepts these files for the broader performance-scoring pipeline:
+
+- `healthcare_workers.csv`
+- `operations.csv`
+
+Filename validation was chosen as a clear, inexpensive safeguard for the six-week prototype scope. A future phase could inspect headers and validate schemas so equivalent files could use different names.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20 or newer
+- npm
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Check the project
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+## How to Use It
 
-To learn more about Next.js, take a look at the following resources:
+1. Open the home page.
+2. Drag and drop the required CSV files into the uploader, or select them through the file picker.
+3. Select **Generate Metrics**.
+4. Review the three report sections at `/results`.
+5. Download the individual CSV report needed for the bulletin.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The generated report is stored in browser `sessionStorage` while navigating from the upload page to the results page. No CSV data is uploaded to a server in this prototype.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Installed Packages
 
-## Deploy on Vercel
+### Runtime dependencies
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Next.js**: application framework, routing, and production build tooling.
+- **React** and **React DOM**: UI components and browser rendering.
+- **Papa Parse**: parses uploaded CSV files and serializes report data for downloads.
+- **react-drag-drop-files**: provides the drag-and-drop and file-picker upload control.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Development dependencies
+
+- **TypeScript**: static typing for the application and calculation contracts.
+- **ESLint** and **eslint-config-next**: code-quality and Next.js checks.
+- **@types/node**, **@types/react**, **@types/react-dom**: TypeScript types for the runtime and React APIs.
+- **@types/papaparse**: TypeScript types for Papa Parse.
+- **Tailwind CSS** and **@tailwindcss/postcss**: utility styling and CSS processing.
+
+## Project Structure
+
+```text
+app/
+  page.tsx                    Upload page and CSV validation
+  results/page.tsx            Dashboard and separate CSV downloads
+  services/process-csv.ts     Calculations and report shaping
+  globals.css                Global uploader and results-table styles
+```
+
+## Deployment
+
+This client-side Next.js application can be deployed to Vercel:
+
+1. Push the repository to GitHub.
+2. Import the repository into [Vercel](https://vercel.com/new).
+3. Keep the detected Next.js framework settings.
+4. Deploy and open the generated production URL.
+
+
