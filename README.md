@@ -1,6 +1,6 @@
 # Quarterly Health Bulletin
 
-A browser-based prototype that reads DHSI2-style CSV reports and produces a Quarterly Health Bulletin. Users upload the source files, generate calculations, review three report sections, and download each section as a separate CSV file.
+A browser-based prototype that reads DHIS2-style CSV reports and produces a Quarterly Health Bulletin. Users upload the source files, generate calculations, review three report sections, and download each section as a separate CSV file.
 
 ## What It Does
 
